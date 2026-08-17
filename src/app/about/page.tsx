@@ -4,6 +4,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
 import { GithubIcon } from "@/components/ui/GithubIcon";
 import { ArrowRight } from "lucide-react";
+import { EXPERIENCE } from "@/data/snapshot";
 
 export const metadata = {
   title: "About — Fatima Shaikh",
@@ -112,7 +113,24 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
-
+        <div className="mt-14">
+          <h2 className="font-display text-project-h font-semibold text-text-primary">
+            Experience
+          </h2>
+          <div className="mt-6 flex flex-col gap-6">
+            {EXPERIENCE.map((exp) => (
+              <div key={exp.role + exp.company} className="border-l-2 border-accent pl-5">
+                <p className="font-display font-semibold text-text-primary">
+                  {exp.role} — {exp.company}
+                </p>
+                <p className="mt-1 font-body text-sm text-text-secondary">{exp.period}</p>
+                <p className="mt-2 font-body text-sm text-text-secondary">
+                  {exp.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
         <div className="mt-14 flex flex-wrap gap-4">
           <Button href="/projects" variant="primary" icon={ArrowRight}>
             View Projects

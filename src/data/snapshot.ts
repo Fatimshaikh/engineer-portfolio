@@ -37,3 +37,20 @@ export const SNAPSHOT_AREAS = [
     domain: "accent" as const,
   },
 ];
+
+export const EXPERIENCE = [
+  {
+    role: "Backend & AI Engineering Intern",
+    company: "FlyRank",
+    period: "July 2026 – August 2026",
+    description:
+      "Backend and AI engineering track, building hands-on fluency across backend systems and applied AI engineering.",
+  },
+  {
+    role: "Web Developer Intern",
+    company: "Symits",
+    period: "2024",
+    description:
+      "Web development internship, building hands-on experience with real-world web projects.",
+  },
+];
