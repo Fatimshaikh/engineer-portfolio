@@ -26,7 +26,7 @@ export function ProjectCard({ project }: { project: Project }) {
         <div className="flex items-start justify-between gap-4">
           <Tag domain={tagDomain}>{project.category}</Tag>
           <a
-          
+
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
