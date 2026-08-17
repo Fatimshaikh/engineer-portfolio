@@ -36,7 +36,7 @@ export function Navbar() {
           href="/"
           className="font-display text-lg font-semibold text-text-primary"
         >
-          fatima<span className="text-accent">.</span>dev
+          Fatima<span className="text-accent">.</span>Shaikh
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">

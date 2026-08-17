@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import type { LucideIcon } from "lucide-react";
+
+type IconComponent = React.ComponentType<{ size?: number; className?: string }>;
 
 type ButtonProps = {
   children: React.ReactNode;
   href?: string;
   onClick?: () => void;
   variant?: "primary" | "ghost";
-  icon?: LucideIcon;
+  icon?: IconComponent;
   className?: string;
 };
 
