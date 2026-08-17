@@ -3,6 +3,8 @@ import { EngineeringSnapshot } from "@/components/sections/EngineeringSnapshot";
 import { SelectedProjects } from "@/components/sections/SelectedProjects";
 import { EngineeringPhilosophy } from "@/components/sections/EngineeringPhilosophy";
 import { TechnicalStack } from "@/components/sections/TechnicalStack";
+import { AboutPreview } from "@/components/sections/AboutPreview";
+import { ContactCta } from "@/components/sections/ContactCta";
 import { SectionReveal } from "@/components/ui/SectionReveal";
 
 export default function Home() {
@@ -20,6 +22,12 @@ export default function Home() {
       </SectionReveal>
       <SectionReveal direction="right" delay={0.05}>
         <TechnicalStack />
+      </SectionReveal>
+      <SectionReveal direction="up">
+        <AboutPreview />
+      </SectionReveal>
+      <SectionReveal direction="up">
+        <ContactCta />
       </SectionReveal>
     </main>
   );
