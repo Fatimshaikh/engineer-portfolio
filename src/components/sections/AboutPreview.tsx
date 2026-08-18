@@ -14,9 +14,9 @@ export function AboutPreview() {
         </h2>
         <p className="mt-4 font-body text-text-secondary">
           BS in Software Engineering, with hands-on experience across backend,
-          data engineering, and AI — currently a Backend & AI Engineering Intern
-          at FlyRank. I intentionally explore multiple domains because
-          understanding how systems work end-to-end makes me a stronger engineer.
+          data engineering, and AI. I intentionally explore multiple domains
+          because understanding how systems work end-to-end makes me a
+          stronger engineer.
         </p>
         <Button href="/about" variant="ghost" icon={ArrowRight} className="mt-6">
           More about me

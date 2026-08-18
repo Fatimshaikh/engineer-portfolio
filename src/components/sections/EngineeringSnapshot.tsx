@@ -45,6 +45,13 @@ export function EngineeringSnapshot() {
               <p className="mt-2 font-body text-text-secondary">
                 {featured.description}
               </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {["FastAPI", "Django", "PostgreSQL", "SQLAlchemy", "REST APIs"].map((tool) => (
+                  <span key={tool} className="rounded-full border border-border bg-surface-alt px-3 py-1 font-body text-xs text-text-secondary">
+                    {tool}
+                  </span>
+                ))}
+              </div>
             </div>
           </motion.div>
 

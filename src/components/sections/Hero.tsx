@@ -5,6 +5,7 @@ import { GithubIcon } from "@/components/ui/GithubIcon";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion";
+import { PROJECTS } from "@/data/projects";
 
 // TODO: replace with Fatima's real GitHub profile URL
 const GITHUB_URL = "https://github.com/Fatimshaikh";
@@ -63,7 +64,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="flex flex-wrap gap-x-8 gap-y-2 pt-4 font-body text-sm text-text-secondary"
         >
-          <span>12+ engineering projects</span>
+          <span>{PROJECTS.length}+ engineering projects</span>
           <span>Backend · Data Engineering · AI Systems</span>
         </motion.div>
       </Container>

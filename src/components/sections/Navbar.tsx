@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
@@ -15,6 +16,7 @@ const NAV_LINKS = [
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -22,30 +24,23 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 w-full border-b transition-colors duration-200",
-        scrolled
-          ? "border-border bg-background/90 backdrop-blur-sm"
-          : "border-transparent bg-transparent"
-      )}
-    >
+    <header className={cn("sticky top-0 z-50 w-full border-b transition-colors duration-200", scrolled || mobileOpen ? "border-border bg-background/95 backdrop-blur-sm" : "border-transparent bg-transparent")}>
       <Container className="flex h-16 items-center justify-between">
-        <Link
-          href="/"
-          className="font-display text-lg font-semibold text-text-primary"
-        >
+        <Link href="/" className="font-display text-lg font-semibold text-text-primary" onClick={() => setMobileOpen(false)}>
           Fatima<span className="text-accent">.</span>Shaikh
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
           {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="font-body text-sm font-medium text-text-secondary transition-colors hover:text-text-primary"
-            >
+            <Link key={link.href} href={link.href} className="font-body text-sm font-medium text-text-secondary transition-colors hover:text-text-primary">
               {link.label}
             </Link>
           ))}
@@ -55,14 +50,23 @@ export function Navbar() {
           Let's Connect
         </Button>
 
-        {/* Mobile menu placeholder - built in a later step */}
-        <button
-          className="inline-flex md:hidden font-body text-sm font-medium text-text-primary"
-          aria-label="Open menu"
-        >
-          Menu
+        <button onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? "Close menu" : "Open menu"} className="inline-flex items-center justify-center text-text-primary md:hidden">
+          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </Container>
+
+      {mobileOpen && (
+        <nav className="flex flex-col gap-1 border-t border-border bg-background px-6 py-4 md:hidden">
+          {NAV_LINKS.map((link) => (
+            <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-3 font-body text-base font-medium text-text-primary transition-colors hover:bg-surface-alt">
+              {link.label}
+            </Link>
+          ))}
+          <Link href="/contact" onClick={() => setMobileOpen(false)} className="mt-2 rounded-md bg-primary px-4 py-3 text-center font-body text-sm font-medium text-white">
+            Let's Connect
+          </Link>
+        </nav>
+      )}
     </header>
   );
 }
