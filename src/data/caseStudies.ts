@@ -3,10 +3,10 @@ export type CaseStudy = {
     problem: string;
     architecture: string[];
     howItWorks: string[];
-    techDecisions: { decision: string; reason: string }[];
-    challenges: { title: string; description: string }[];
+    techDecisions?: { decision: string; reason: string }[];
+    challenges?: { title: string; description: string }[];
     result: string;
-    lessons: string[];
+    lessons?: string[];
 };
 
 export const CASE_STUDIES: Record<string, CaseStudy> = {
@@ -178,4 +178,135 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
             "LLM outputs shouldn't be trusted for figures that need to be exactly right — an independent verification layer is worth the extra engineering.",
         ],
     },
+
+    "smart-order-system": {
+        problem:
+            "Build a production-style e-commerce order management backend with a scalable, modular architecture, rather than a single monolithic script.",
+        architecture: [
+            "FastAPI — REST APIs for user, product, and order management",
+            "PostgreSQL + SQLAlchemy — relational data management",
+            "Redis — caching for product data",
+            "RabbitMQ — asynchronous order processing via worker services",
+            "Docker + Docker Compose — containerized, consistent deployment",
+        ],
+        howItWorks: [
+            "FastAPI exposes REST endpoints for users, products, and orders, built with a service-layer design.",
+            "Product data is cached in Redis to reduce database load and speed up responses.",
+            "Orders are handed off to RabbitMQ and processed asynchronously by worker services rather than blocking the request.",
+            "The full stack runs via Docker Compose for consistent local deployment.",
+        ],
+        result:
+            "A working backend with a modular, layered architecture: API layer, service layer, caching layer, and async processing layer, each with a clear responsibility.",
+    },
+
+    "ecommerce-api": {
+        problem:
+            "Build a secure e-commerce backend supporting user, product, cart, and order management with proper authentication and authorization.",
+        architecture: [
+            "FastAPI — REST API layer",
+            "PostgreSQL + SQLAlchemy — database and ORM",
+            "JWT authentication — token-based auth",
+            "bcrypt — password hashing",
+        ],
+        howItWorks: [
+            "Users authenticate and receive a JWT token, used to access protected routes.",
+            "Role-based access control separates admin and regular user permissions.",
+            "CRUD operations for products, carts, and orders run through SQLAlchemy against a PostgreSQL schema built for transactional workflows.",
+            "Passwords are hashed with bcrypt before storage.",
+        ],
+        result:
+            "A working REST API with authentication, authorization, and full CRUD for the core e-commerce entities, documented via Swagger UI.",
+    },
+
+    "django-multivendor-platform": {
+        problem:
+            "Build a multivendor e-commerce backend platform where multiple vendors can each manage their own products and sales within one system.",
+        architecture: [
+            "Django — MVC-style web framework",
+            "PostgreSQL — relational database",
+            "Django ORM — data access layer",
+        ],
+        howItWorks: [
+            "Vendors and admins have separate role-based authentication and permissions.",
+            "Vendors manage their own products through the Django ORM.",
+            "Customers use shopping cart and order management functionality built on top of the same data models.",
+            "Admin and vendor dashboards are separated by role.",
+        ],
+        result:
+            "A working multivendor platform with vendor/admin role separation, product management, and order flow, built end-to-end with Django.",
+    },
+
+    "pyspark-log-pipeline": {
+        problem:
+            "Process and analyze large-scale log data at scale, using a layered architecture rather than a single ad-hoc script.",
+        architecture: [
+            "PySpark — distributed data processing",
+            "Parquet — columnar storage format at each layer",
+            "Bronze → Silver → Gold — layered ETL architecture",
+        ],
+        howItWorks: [
+            "Bronze layer ingests raw log files and stores them as structured Parquet, preserving the original data.",
+            "Silver layer parses timestamps, extracts log levels and messages, and removes duplicates and null records.",
+            "Gold layer aggregates log metrics such as daily error counts and the most frequent error messages.",
+        ],
+        result:
+            "A modular, layered log-processing pipeline that turns raw logs into aggregated, analysis-ready metrics using PySpark and Parquet.",
+    },
+
+    "mlops-end-to-end": {
+        problem:
+            "Cover the full lifecycle of a machine learning model — training, tracking, serving, and deployment — rather than just a training script.",
+        architecture: [
+            "FastAPI — serves prediction endpoints",
+            "MLflow — experiment tracking, model versioning, and model registry",
+            "Docker — containerized deployment",
+            "GitHub Actions — CI/CD automation",
+        ],
+        howItWorks: [
+            "Model experiments are tracked and versioned through MLflow's tracking and registry features.",
+            "FastAPI serves the trained model behind prediction endpoints.",
+            "A CI/CD pipeline via GitHub Actions automates the deployment process.",
+            "The application is containerized with Docker for consistent deployment across environments.",
+        ],
+        result:
+            "An end-to-end MLOps pipeline covering experiment tracking, model serving, and automated deployment, not just a standalone training script.",
+    },
+
+    "cloud-compliance-checker": {
+        problem:
+            "Automate the process of checking cloud infrastructure configuration against a recognized security compliance framework, rather than a manual audit.",
+        architecture: [
+            "Python — core automation logic",
+            "NIST Cybersecurity Framework (CSF) — compliance framework mapped against",
+            "pandas + openpyxl — report generation",
+        ],
+        howItWorks: [
+            "Analyzes GCP IAM policies to detect least-privilege violations and overprivileged accounts.",
+            "Checks encryption, firewall rules, and monitoring/alerting configuration against NIST CSF controls.",
+            "Automates risk scoring and compliance gap identification across cloud resources.",
+            "Generates a detailed Excel report with findings and remediation recommendations.",
+        ],
+        result:
+            "A working compliance checker that maps real GCP infrastructure configuration against NIST CSF and produces an actionable Excel report.",
+    },
+
+    "n8n-automation-projects": {
+        problem:
+            "Automate real business processes — lead capture, follow-up communication, and reporting — end to end, combining workflow automation with an AI agent rather than static rules alone.",
+        architecture: [
+            "n8n — workflow automation engine",
+            "Google Gemini AI — LLM-based response generation and decision-making",
+            "Webhooks + REST APIs — event-driven triggers",
+            "Gmail API + Google Sheets API — communication and data storage",
+        ],
+        howItWorks: [
+            "A webhook receives a form submission and triggers the workflow.",
+            "Lead data is saved to Google Sheets automatically.",
+            "Google Gemini AI generates a personalized response based on the submitted data.",
+            "Gmail API sends the AI-generated response automatically to the lead.",
+        ],
+        result:
+            "A working automated lead-capture-to-response pipeline: webhook, Google Sheets, an LLM-based agent, and Gmail all connected end-to-end.",
+    },
 };
+

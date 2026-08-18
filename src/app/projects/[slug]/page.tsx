@@ -102,54 +102,60 @@ export default async function ProjectDetailPage(props: {
               </ol>
             </CaseStudySection>
 
-            <CaseStudySection title="Technology Decisions">
-              <div className="flex flex-col gap-5">
-                {caseStudy.techDecisions.map(function (td, i) {
-                  return (
-                    <div key={i}>
-                      <p className="font-body font-semibold text-text-primary">
-                        {td.decision}
-                      </p>
-                      <p className="mt-1 font-body text-sm text-text-secondary">
-                        {td.reason}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            </CaseStudySection>
+            {caseStudy.techDecisions && (
+              <CaseStudySection title="Technology Decisions">
+                <div className="flex flex-col gap-5">
+                  {caseStudy.techDecisions.map(function (td, i) {
+                    return (
+                      <div key={i}>
+                        <p className="font-body font-semibold text-text-primary">
+                          {td.decision}
+                        </p>
+                        <p className="mt-1 font-body text-sm text-text-secondary">
+                          {td.reason}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CaseStudySection>
+            )}
 
-            <CaseStudySection title="Challenges">
-              <div className="flex flex-col gap-6">
-                {caseStudy.challenges.map(function (c, i) {
-                  return (
-                    <div key={i} className="rounded-lg border border-border bg-surface-alt p-5">
-                      <p className="font-display font-semibold text-signal">{c.title}</p>
-                      <p className="mt-2 font-body text-sm text-text-secondary">
-                        {c.description}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            </CaseStudySection>
+            {caseStudy.challenges && (
+              <CaseStudySection title="Challenges">
+                <div className="flex flex-col gap-6">
+                  {caseStudy.challenges.map(function (c, i) {
+                    return (
+                      <div key={i} className="rounded-lg border border-border bg-surface-alt p-5">
+                        <p className="font-display font-semibold text-signal">{c.title}</p>
+                        <p className="mt-2 font-body text-sm text-text-secondary">
+                          {c.description}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CaseStudySection>
+            )}
 
             <CaseStudySection title="Result">
               <p className="font-body text-text-secondary">{caseStudy.result}</p>
             </CaseStudySection>
 
-            <CaseStudySection title="Lessons Learned">
-              <ul className="flex flex-col gap-2">
-                {caseStudy.lessons.map(function (lesson, i) {
-                  return (
-                    <li key={i} className="font-body text-text-secondary">
-                      <span className="mr-2 text-accent">*</span>
-                      {lesson}
-                    </li>
-                  );
-                })}
-              </ul>
-            </CaseStudySection>
+            {caseStudy.lessons && (
+              <CaseStudySection title="Lessons Learned">
+                <ul className="flex flex-col gap-2">
+                  {caseStudy.lessons.map(function (lesson, i) {
+                    return (
+                      <li key={i} className="font-body text-text-secondary">
+                        <span className="mr-2 text-accent">*</span>
+                        {lesson}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </CaseStudySection>
+            )}
           </div>
         ) : (
           <p className="mt-14 border-t border-border pt-10 font-body text-text-secondary">

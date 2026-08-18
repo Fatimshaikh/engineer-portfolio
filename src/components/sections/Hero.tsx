@@ -29,7 +29,8 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="max-w-3xl font-display text-hero font-semibold text-text-primary"
         >
-          Building practical systems across backend, data, and AI.
+          Building practical systems across backend, data, and AI
+          <span className="animate-blink text-accent">.</span>
         </motion.h1>
 
         <motion.p
