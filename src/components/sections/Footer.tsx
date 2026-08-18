@@ -10,7 +10,7 @@ export function Footer() {
     <footer className="border-t border-border py-10">
       <Container className="flex flex-col items-center gap-4 text-center md:flex-row md:justify-between md:text-left">
         <p className="font-body text-sm text-text-secondary">
-          &copy; {year} Fatima Shaikh
+          &copy; {year} <span className="signature font-display font-semibold">Fatima.Shaikh</span>
         </p>
         <div className="flex items-center gap-5">
           <a href="mailto:fshaikhh15@gmail.com" aria-label="Email" className="text-text-secondary transition-colors hover:text-text-primary">

@@ -34,7 +34,7 @@ export function Navbar() {
   return (
     <header className={cn("sticky top-0 z-50 w-full border-b transition-colors duration-200", scrolled || mobileOpen ? "border-border bg-background/95 backdrop-blur-sm" : "border-transparent bg-transparent")}>
       <Container className="flex h-16 items-center justify-between">
-        <Link href="/" className="font-display text-lg font-semibold text-text-primary" onClick={() => setMobileOpen(false)}>
+        <Link href="/" className="signature font-display text-lg font-semibold" onClick={() => setMobileOpen(false)}>
           Fatima<span className="text-accent">.</span>Shaikh
         </Link>
 
