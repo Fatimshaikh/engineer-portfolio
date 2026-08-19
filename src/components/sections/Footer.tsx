@@ -9,9 +9,14 @@ export function Footer() {
   return (
     <footer className="border-t border-border py-10">
       <Container className="flex flex-col items-center gap-4 text-center md:flex-row md:justify-between md:text-left">
-        <p className="font-body text-sm text-text-secondary">
-          &copy; {year} <span className="signature font-display font-semibold">Fatima.Shaikh</span>
-        </p>
+        <div className="flex flex-col items-center gap-1 md:items-start">
+          <p className="font-body text-sm text-text-secondary">
+            &copy; {year} <span className="signature font-display font-semibold">Fatima.Shaikh</span>
+          </p>
+          <a href="/how-you-got-here" className="font-body text-xs text-text-secondary underline decoration-dotted transition-colors hover:text-accent">
+            Curious how you got to this page?
+          </a>
+        </div>
         <div className="flex items-center gap-5">
           <a href="mailto:fshaikhh15@gmail.com" aria-label="Email" className="text-text-secondary transition-colors hover:text-text-primary">
             <Mail size={18} />
