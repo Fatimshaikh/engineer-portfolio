@@ -25,10 +25,16 @@ export function RecordCard() {
           <span className="text-sm font-medium text-text-primary">{row.value}</span>
         </div>
       ))}
-      <div className="mt-4 flex items-center gap-2 text-accent">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: [0.8, 1.1, 1] }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.6, delay: 0.35 }}
+        className="mt-4 flex items-center gap-2 text-accent"
+      >
         <CheckCircle2 size={16} />
         <span className="text-sm font-medium">{RECORD_CARD.status}</span>
-      </div>
+      </motion.div>
     </motion.div>
   );
 }
