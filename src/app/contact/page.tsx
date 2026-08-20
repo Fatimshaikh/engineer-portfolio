@@ -3,6 +3,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { GithubIcon } from "@/components/ui/GithubIcon";
 import { Mail, ArrowUpRight } from "lucide-react";
 import { LinkedinIcon } from "@/components/ui/LinkedinIcon";
+import { ContactForm } from "@/components/sections/ContactForm";
 
 export const metadata = {
   title: "Contact — Fatima Shaikh",
@@ -37,7 +38,7 @@ export default function ContactPage() {
         <SectionHeader
           eyebrow="Contact"
           title="Let's build something"
-          description="Open to backend, data engineering, and AI engineering roles and collaborations. The fastest way to reach me is email."
+          description="Open to backend, data engineering, and AI engineering roles and collaborations. I'm not currently taking scheduled calls, but send your requirements below or by email and I'll follow up."
         />
 
         <div className="mt-12 flex flex-col gap-4">
@@ -66,6 +67,18 @@ export default function ContactPage() {
               />
             </a>
           ))}
+        </div>
+
+        <div className="mt-14 border-t border-border pt-14">
+          <h2 className="font-display text-project-h font-semibold text-text-primary">
+            Or send your requirements directly
+          </h2>
+          <p className="mt-2 font-body text-sm text-text-secondary">
+            Tell me what you need built — I&apos;ll reply by email.
+          </p>
+          <div className="mt-6">
+            <ContactForm />
+          </div>
         </div>
       </Container>
     </main>
