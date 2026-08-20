@@ -46,9 +46,14 @@ export function Navbar() {
           ))}
         </nav>
 
-        <Button href="/contact" variant="primary" className="hidden md:inline-flex">
-          Let's Connect
-        </Button>
+        <div className="hidden items-center gap-3 md:flex">
+          <Button href="/Fatima_Shaikh_Resume.pdf" variant="ghost">
+            Resume
+          </Button>
+          <Button href="/contact" variant="primary">
+            Let's Connect
+          </Button>
+        </div>
 
         <button onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? "Close menu" : "Open menu"} className="inline-flex items-center justify-center text-text-primary md:hidden">
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -62,6 +67,9 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
+          <a href="/Fatima_Shaikh_Resume.pdf" className="rounded-md px-2 py-3 font-body text-base font-medium text-text-primary transition-colors hover:bg-surface-alt">
+            Resume
+          </a>
           <Link href="/contact" onClick={() => setMobileOpen(false)} className="mt-2 rounded-md bg-primary px-4 py-3 text-center font-body text-sm font-medium text-white">
             Let's Connect
           </Link>

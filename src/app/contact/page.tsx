@@ -1,7 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { GithubIcon } from "@/components/ui/GithubIcon";
-import { Mail, ArrowUpRight } from "lucide-react";
+import { Mail, ArrowUpRight, FileText } from "lucide-react";
 import { LinkedinIcon } from "@/components/ui/LinkedinIcon";
 import { ContactForm } from "@/components/sections/ContactForm";
 
@@ -28,6 +28,12 @@ const CONTACT_LINKS = [
     value: "linkedin.com/in/fatima-shaikh",
     href: "https://www.linkedin.com/in/fatima-shaikh-392087150/",
     icon: LinkedinIcon,
+  },
+  {
+    label: "Resume",
+    value: "Download .pdf",
+    href: "/Fatima_Shaikh_Resume.pdf",
+    icon: FileText,
   },
 ];
 
