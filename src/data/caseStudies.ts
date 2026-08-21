@@ -308,5 +308,124 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         result:
             "A working automated lead-capture-to-response pipeline: webhook, Google Sheets, an LLM-based agent, and Gmail all connected end-to-end.",
     },
+
+    "flyrank-llm-triage": {
+        problem:
+            "Build a support-message triage endpoint backed by a real LLM provider that is actually reliable in production — not just a happy-path demo. The model must never invent a category, never leak the prompt, and the system must survive bad responses, timeouts, and provider outages gracefully.",
+        architecture: [
+            "FastAPI - the triage endpoint",
+            "Groq (llama-3.1-8b-instant) - OpenAI-compatible LLM provider",
+            "Pydantic - strict output schema validation",
+            "Repair-then-quarantine pipeline - handles invalid model output",
+            "Cost and eval logging - logs/cost.jsonl and a scored eval set",
+        ],
+        howItWorks: [
+            "A support message is sent to the endpoint and validated (empty or oversized text is rejected before any model call).",
+            "The model classifies it into a strict category, urgency, and suggested team, returning structured JSON.",
+            "If the model's output fails schema validation, one repair retry is attempted with the error included in the prompt.",
+            "If the repair also fails, the request is quarantined - logged in full with the input, error, and prompt version - and the caller gets a clear 422, never a silent failure.",
+            "Every successful call logs its cost: model, token counts, duration, and whether a repair was needed.",
+        ],
+        techDecisions: [
+            {
+                decision: "Manual retry policy instead of the SDK's built-in retries",
+                reason:
+                    "The SDK's own retries were disabled (max_retries=0) in favor of an explicit policy: retries only on timeout, 429, and 5xx, with exponential backoff plus jitter, capped at 3 attempts - so a bad API key (401) fails immediately instead of retrying a request that can never succeed.",
+            },
+            {
+                decision: "A kill switch environment variable (LLM_ENABLED=false)",
+                reason:
+                    "Returns an immediate deterministic fallback with zero model calls - lets the system degrade safely if the provider needs to be disabled without a code change.",
+            },
+            {
+                decision: "Three environment variables to swap providers entirely",
+                reason:
+                    "LLM_BASE_URL, LLM_API_KEY, and LLM_MODEL are the only provider-specific values - the rest of the code has no hard dependency on Groq specifically.",
+            },
+        ],
+        challenges: [
+            {
+                title: "Proving the repair and quarantine paths actually work",
+                description:
+                    "Rather than trusting the happy path, both failure modes were deliberately forced: an invalid category outside the enum on the first attempt (confirmed the repair retry corrected it and returned 200), and a forced total validation failure on both attempts (confirmed a readable 422 and a full logged entry in logs/quarantine.jsonl).",
+            },
+            {
+                title: "A bad API key surfaces as a generic 500",
+                description:
+                    "AuthenticationError is not currently special-cased, so a bad key returns a generic 500 instead of a distinct status code. Documented as a known gap and a clear next step rather than hidden.",
+            },
+            {
+                title: "One eval case failed and the likely cause was traced, not guessed",
+                description:
+                    "A clear feature request (\"add CSV export\") was misclassified as \"other\". The prompt's few-shot examples didn't include an unambiguous feature-request case - the closest example was deliberately vague and correctly maps to \"other\" - so the model likely under-recognized the pattern. Fix identified: add one canonical feature-request example and re-run the eval.",
+            },
+        ],
+        result:
+            "Scored 7/8 (88%) on the eval set. Verified end-to-end: valid and invalid requests, the repair path, the quarantine path, and the kill switch all behave as designed. Cost measured directly from real logs: about $0.0000287 per call, projecting to roughly $8.60/month at 10,000 requests/day.",
+        lessons: [
+            "Testing only the happy path hides failure-handling bugs - deliberately forcing both failure paths was what actually proved the reliability claims true.",
+            "Prompt example coverage directly affects real-world accuracy - a missing example category was the traceable root cause of the one eval failure, not a vague model limitation.",
+        ],
+    },
+
+    "flyrank-capstone-widget-platform": {
+        problem:
+            "Build a backend platform that lets a business create an embeddable lead-capture widget, install it on any website with a single script tag, and safely accept submissions from the public internet - validated, spam-filtered, geo-enriched, and rate-limited, with zero paid infrastructure.",
+        architecture: [
+            "Node.js + Express (ES Modules) - API layer",
+            "PostgreSQL 16 (Docker) - persistence",
+            "Zod - request validation",
+            "bcrypt + JWT - authentication",
+            "express-rate-limit - abuse protection",
+            "Layered structure: routes -> controllers -> services -> repositories",
+        ],
+        howItWorks: [
+            "A widget owner registers, logs in, and creates a widget through JWT-authenticated endpoints - receiving an embeddable script snippet.",
+            "A customer website embeds that one script tag, which fetches the widget's config from a CORS-enabled public endpoint and renders a form.",
+            "A visitor submits the form. The request is Zod-validated, checked against a honeypot field for spam, geo-enriched through a two-provider fallback chain, and stored - all before a rate limit of 10 requests per minute per IP kicks in.",
+            "A non-critical confirmation \"email\" is triggered (console-logged in this build) - and a failure here never blocks a successful submission.",
+            "The widget owner views submissions and aggregated stats on a tenant-scoped dashboard.",
+        ],
+        techDecisions: [
+            {
+                decision: "A strict routes -> controllers -> services -> repositories layering",
+                reason:
+                    "Repositories are the only layer allowed to write raw SQL - meaning swapping Postgres for another database only touches that one layer, nothing else in the app changes.",
+            },
+            {
+                decision: "A two-provider geo enrichment fallback chain with no API key required",
+                reason:
+                    "ip-api.com as primary, ipapi.co as fallback - if both fail, the submission is still stored rather than rejected, since geo data is enrichment, not a requirement.",
+            },
+            {
+                decision: "A honeypot field instead of a CAPTCHA",
+                reason:
+                    "A hidden form field real users never fill in, but bots often do - simple, invisible spam filtering with no user friction.",
+            },
+        ],
+        challenges: [
+            {
+                title: "Making sure a failing email provider never blocks a real submission",
+                description:
+                    "The confirmation email step is intentionally non-critical - what's tested is that its failure never prevents a 201 response to the visitor, not actual email deliverability. Verified explicitly and documented as a deliberate scope boundary.",
+            },
+            {
+                title: "Proving tenant isolation actually holds",
+                description:
+                    "A widget owner requesting another tenant's widget by ID must get a 404, not the data. Covered directly in the automated test suite rather than assumed from the auth middleware alone.",
+            },
+            {
+                title: "Proving the geo fallback chain fires under real conditions",
+                description:
+                    "Rather than trusting the fallback logic by inspection, the provider fallback was captured firing during the automated test run itself, with the evidence kept as part of the test documentation.",
+            },
+        ],
+        result:
+            "14 automated tests passing, covering registration, duplicate email rejection, input validation, login success and failure, widget CRUD, tenant isolation, CORS preflight handling, malformed and oversized payload rejection, and honeypot spam detection. Full manual evidence documented for every requirement, including rate-limit bursts and email failure-tolerance.",
+        lessons: [
+            "A layered architecture is only proven by actually swapping a dependency - moving from an in-memory repository to Postgres in an earlier assignment without touching the service layer validated the same principle used here.",
+            "Designing for graceful degradation (geo enrichment, email confirmation) up front is simpler than retrofitting it - both were built to fail safely from the start rather than patched in later.",
+        ],
+    },
 };
 

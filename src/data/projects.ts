@@ -151,4 +151,26 @@ export const PROJECTS: Project[] = [
     github: "https://github.com/Fatimshaikh/n8n-automation-projects",
     featured: false,
   },
+  {
+    slug: "flyrank-llm-triage",
+    name: "LLM Triage Endpoint",
+    category: "Backend + AI Reliability Engineering",
+    domain: "ai",
+    description:
+      "A support-message triage endpoint built on Groq, with a real reliability layer: schema validation, repair-then-quarantine handling, retry policy, a kill switch, and per-call cost logging.",
+    technologies: ["FastAPI", "Groq", "Pydantic", "Python"],
+    github: "https://github.com/Fatimshaikh/flyrank-be17-llm-endpoint",
+    featured: false,
+  },
+  {
+    slug: "flyrank-capstone-widget-platform",
+    name: "Embeddable Widget & Lead-Capture Platform",
+    category: "Backend Capstone",
+    domain: "backend",
+    description:
+      "A multi-tenant backend platform for creating embeddable lead-capture widgets: JWT auth, tenant isolation, spam filtering, geo enrichment with a fallback chain, rate limiting, and a submissions dashboard.",
+    technologies: ["Node.js", "Express", "PostgreSQL", "JWT", "Zod", "Docker"],
+    github: "https://github.com/Fatimshaikh/flyrank-capstone-widget-platform",
+    featured: false,
+  },
 ];
